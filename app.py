@@ -6,7 +6,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev_secret_for_local_use')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///driving_course.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///RonGwafo.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
