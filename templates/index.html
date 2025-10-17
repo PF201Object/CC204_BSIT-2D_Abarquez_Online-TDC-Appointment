@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Home - Online TDC Appointment{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h3>Welcome to Online TDC Appointment</h3>
+      <p>Online theoretical driving course appointment booking. Learn road signs, rules, and safe driving practices.</p>
+      <ul>
+        <li>Register an account to book a theory course appointment.</li>
+        <li>View and manage your appointments from the dashboard.</li>
+        <li>Resources and links about road safety are included.</li>
+      </ul>
+      <a href="https://www.who.int/health-topics/road-safety" target="_blank" class="btn btn-outline-primary">Road Safety Resources (WHO)</a>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h4>Login</h4>
+      <form action="{{ url_for('login') }}" method="post">
+        <div class="mb-2">
+          <label class="form-label">Username</label>
+          <input class="form-control" type="text" name="username" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Password</label>
+          <input class="form-control" type="password" name="password" required>
+        </div>
+        <button class="btn btn-primary" type="submit">Login</button>
+      </form>
+      <hr>
+      <p>New? <a href="{{ url_for('register') }}">Register here</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

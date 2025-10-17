@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Online TDC Appointment{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <div class="card p-3">
+      <h4>Hello, {{ user.full_name or user.username }}</h4>
+      <p>From here you can book a theory course and see your bookings.</p>
+      <a class="btn btn-primary" href="{{ url_for('new_appointment') }}">Book New Appointment</a>
+      <a class="btn btn-secondary" href="{{ url_for('my_appointments') }}">My Appointments</a>
+      {% if user.is_admin %}
+        <a class="btn btn-outline-danger" href="{{ url_for('admin_appointments') }}">Admin: All Appointments</a>
+      {% endif %}
+    </div>
+
+    <div class="card mt-3 p-3">
+      <h5>Your recent appointments</h5>
+      {% if appointments %}
+        <ul class="list-group">
+        {% for appt in appointments %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <strong>{{ appt.course_type if appt.course_type else 'Theory Course' }}</strong><br>
+              {{ appt.preferred_date }} {{ appt.preferred_time }} • {{ appt.status }}
+            </div>
+            <form action="{{ url_for('delete_appointment', appt_id=appt.id) }}" method="post" onsubmit="return confirm('Delete appointment?');">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </li>
+        {% endfor %}
+        </ul>
+      {% else %}
+        <p>No appointments yet.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h5>Road Safety Tips</h5>
+      <ul>
+        <li>Always wear seatbelts.</li>
+        <li>Follow speed limits.</li>
+        <li>Avoid distractions while driving.</li>
+        <li>Keep safe following distance.</li>
+      </ul>
+      <a href="https://www.who.int/health-topics/road-safety" target="_blank">More resources</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

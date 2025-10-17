@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Appointments - Online TDC Appointment{% endblock %}
+{% block content %}
+<div class="card p-3">
+  <h4>{{ 'All Appointments' if admin_view else 'My Appointments' }}</h4>
+  {% if appointments %}
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead><tr><th>ID</th><th>User</th><th>Name</th><th>Email</th><th>Contact</th><th>Date</th><th>Time</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+        {% for a in appointments %}
+          <tr>
+            <td>{{ a.id }}</td>
+            <td>{{ a.user.username }}</td>
+            <td>{{ a.full_name }}</td>
+            <td>{{ a.email }}</td>
+            <td>{{ a.contact_number }}</td>
+            <td>{{ a.preferred_date }}</td>
+            <td>{{ a.preferred_time }}</td>
+            <td>{{ a.status }}</td>
+            <td>
+              {% if admin_view %}
+                <form style="display:inline-block" action="{{ url_for('change_status', appt_id=a.id) }}" method="post">
+                  <select name="status" class="form-select form-select-sm d-inline-block" style="width:auto;display:inline-block;">
+                    <option value="Pending" {% if a.status=='Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Confirmed" {% if a.status=='Confirmed' %}selected{% endif %}>Confirmed</option>
+                    <option value="Cancelled" {% if a.status=='Cancelled' %}selected{% endif %}>Cancelled</option>
+                  </select>
+                  <button class="btn btn-sm btn-primary" type="submit">Update</button>
+                </form>
+              {% endif %}
+              <form style="display:inline-block" action="{{ url_for('delete_appointment', appt_id=a.id) }}" method="post" onsubmit="return confirm('Delete appointment?');">
+                <button class="btn btn-sm btn-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>No appointments found.</p>
+  {% endif %}
+</div>
+{% endblock %}

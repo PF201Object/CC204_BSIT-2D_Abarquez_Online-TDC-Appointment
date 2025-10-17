@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Book Appointment - Online TDC Appointment{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <div class="card p-4">
+      <h3>Book Theory Course Appointment</h3>
+      <form action="{{ url_for('new_appointment') }}" method="post">
+        <div class="mb-2">
+          <label class="form-label">Full Name</label>
+          <input class="form-control" type="text" name="full_name" required value="{{ (user.full_name if user) or '' }}">
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Email</label>
+          <input class="form-control" type="email" name="email" required value="{{ (user.email if user) or '' }}">
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Contact Number</label>
+          <input class="form-control" type="text" name="contact_number" required placeholder="09xxxxxxxxx">
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Preferred Date</label>
+          <input class="form-control" type="date" name="preferred_date" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Preferred Time</label>
+          <input class="form-control" type="time" name="preferred_time" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label">Remarks (optional)</label>
+          <textarea class="form-control" name="remarks" rows="3"></textarea>
+        </div>
+        <button class="btn btn-success" type="submit">Submit Appointment</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
