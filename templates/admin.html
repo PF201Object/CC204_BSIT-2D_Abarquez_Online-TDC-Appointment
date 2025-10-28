@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - TDC Appointment System</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #0066cc;
+            color: white;
+        }
+        td button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        td button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Admin Dashboard</h2>
+<p>Manage Appointments and Payments</p>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Contact</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+    </tr>
+    {% for appt in appointments %}
+    <tr>
+        <td>{{ appt.id }}</td>
+        <td>{{ appt.full_name }}</td>
+        <td>{{ appt.email }}</td>
+        <td>{{ appt.contact_number }}</td>
+        <td>{{ appt.preferred_date }}</td>
+        <td>{{ appt.preferred_time }}</td>
+        <td>{{ appt.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login - TDC Appointment System</title>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='images/tdc_bg.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 40px;
+            border-radius: 10px;
+            color: white;
+            width: 350px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 95%;
+            padding: 10px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #004d99;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>Admin Access</h2>
+        <form method="POST" action="{{ url_for('admin_login') }}">
+            <input type="password" name="token" placeholder="Enter Admin Token" required><br>
+            <button type="submit">Login as Admin</button>
+        </form>
+    </div>
+
+</body>
+</html>

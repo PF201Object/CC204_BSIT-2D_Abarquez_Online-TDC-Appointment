@@ -7,7 +7,7 @@
       <h4>Hello, {{ user.full_name or user.username }}</h4>
       <p>From here you can book a theory course and see your bookings.</p>
       <a class="btn btn-primary" href="{{ url_for('new_appointment') }}">Book New Appointment</a>
-      <a class="btn btn-secondary" href="{{ url_for('my_appointments') }}">My Appointments</a>
+      <a class="btn btn-secondary" href="{{ url_for('appointments') }}">My Appointments</a>
       {% if user.is_admin %}
         <a class="btn btn-outline-danger" href="{{ url_for('admin_appointments') }}">Admin: All Appointments</a>
       {% endif %}

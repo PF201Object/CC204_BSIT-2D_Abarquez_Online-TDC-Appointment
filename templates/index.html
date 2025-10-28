@@ -1,36 +1,67 @@
 {% extends "base.html" %}
 {% block title %}Home - Online TDC Appointment{% endblock %}
+
 {% block content %}
-<div class="row">
-  <div class="col-md-6">
-    <div class="card p-4">
-      <h3>Welcome to Online TDC Appointment</h3>
-      <p>Online theoretical driving course appointment booking. Learn road signs, rules, and safe driving practices.</p>
-      <ul>
-        <li>Register an account to book a theory course appointment.</li>
-        <li>View and manage your appointments from the dashboard.</li>
-        <li>Resources and links about road safety are included.</li>
-      </ul>
-      <a href="https://www.who.int/health-topics/road-safety" target="_blank" class="btn btn-outline-primary">Road Safety Resources (WHO)</a>
+<style>
+  body {
+    background: url("{{ url_for('static', filename='images/tdc_bg.jpg') }}") no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: brightness(0.85);
+  }
+
+  .card {
+    background-color: rgba(255, 255, 255, 0.92);
+    border-radius: 20px;
+  }
+
+  .btn {
+    border-radius: 30px;
+    font-weight: 500;
+  }
+
+  .card h3 {
+    color: #0a3d62;
+    font-weight: 600;
+  }
+
+  .card p, .card li {
+    color: #333;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+  }
+
+  a.text-decoration-none {
+    color: #007bff;
+  }
+
+  a.text-decoration-none:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 85vh;">
+  <div class="card p-5 text-center shadow-lg" style="max-width: 600px; width: 100%;">
+    <h3 class="mb-3">Welcome to Online TDC Appointment</h3>
+    <p>
+      Book your <strong>Theoretical Driving Course (TDC)</strong> appointment online with ease.
+      Learn traffic rules, road signs, and safe driving practices — all in one place.
+    </p>
+    <ul class="list-unstyled mb-4">
+      <li>✔ Register to create your account.</li>
+      <li>✔ Login to manage your appointments.</li>
+      <li>✔ Access resources about road safety.</li>
+    </ul>
+    <div class="d-flex justify-content-center gap-3">
+      <a href="{{ url_for('login') }}" class="btn btn-primary px-4">Login</a>
+      <a href="{{ url_for('admin') }}" class="btn btn-success px-4">Admin</a>
     </div>
-  </div>
-  <div class="col-md-6">
-    <div class="card p-4">
-      <h4>Login</h4>
-      <form action="{{ url_for('login') }}" method="post">
-        <div class="mb-2">
-          <label class="form-label">Username</label>
-          <input class="form-control" type="text" name="username" required>
-        </div>
-        <div class="mb-2">
-          <label class="form-label">Password</label>
-          <input class="form-control" type="password" name="password" required>
-        </div>
-        <button class="btn btn-primary" type="submit">Login</button>
-      </form>
-      <hr>
-      <p>New? <a href="{{ url_for('register') }}">Register here</a></p>
-    </div>
+    <hr class="my-4">
+    <a href="https://www.who.int/health-topics/road-safety" target="_blank" class="text-decoration-none">
+      🌍 Learn more about road safety (WHO)
+    </a>
   </div>
 </div>
 {% endblock %}
