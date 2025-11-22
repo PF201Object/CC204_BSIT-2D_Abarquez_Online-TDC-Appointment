@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}About Us & Booking Guide{% endblock %}
+
+{% block head %}
+<style>
+    .about-section {
+        padding: 40px 0;
+    }
+    .guide-step {
+        background-color: #f8f9fa;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-left: 5px solid #0b2533;
+    }
+    .guide-step h4 {
+        color: #0b2533;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    .step-icon {
+        color: #198754;
+        font-size: 1.5rem;
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-section">
+    <h2 class="text-center mb-4" style="color:#0b2533;">About Our TDC Appointment System</h2>
+    <p class="lead text-center mb-5">
+        We make booking your Theoretical Driving Course (TDC) hassle-free. Our system provides a streamlined,
+        online process to secure your slot and prepare you for safe driving.
+    </p>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card p-4 h-100 shadow-sm">
+                <h3 class="card-title" style="color:#0a3d62;">Our Mission</h3>
+                <p>
+                    Our mission is to simplify the first step in your driving journey. By offering a clean, reliable,
+                    and responsive online booking platform, we ensure that every future driver can easily access the
+                    required theoretical training without delays or confusion. We prioritize transparency and user experience.
+                </p>
+                <h3 class="card-title mt-4" style="color:#0a3d62;">How It Works</h3>
+                <p>
+                    This system connects you directly with available TDC slots. Once you register and book,
+                    your request is sent immediately to the administrative team for verification and final approval.
+                    You can track your status, check payment information, and manage your booking—all from your personal dashboard.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card p-4 h-100 shadow-sm">
+                <h3 class="card-title text-success">Why Choose Online Booking?</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><span class="text-success me-2">✔</span> **24/7 Access:** Book any time, day or night.</li>
+                    <li class="mb-2"><span class="text-success me-2">✔</span> **Real-time Status:** Track your appointment status instantly.</li>
+                    <li class="mb-2"><span class="text-success me-2">✔</span> **No Queues:** Avoid waiting in line; book from the comfort of your home.</li>
+                    <li class="mb-2"><span class="text-success me-2">✔</span> **Paperless:** All details are digitally managed and secure.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center mt-5 mb-4" style="color:#0b2533;">User Guide: How to Book Properly</h2>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="guide-step">
+                <h4><span class="step-icon">1.</span> Register Your Account</h4>
+                <p>Click on the **Register** link in the navigation bar. You must create an account to secure and manage your booking. Use a valid email address as this will be used for communication.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="guide-step">
+                <h4><span class="step-icon">2.</span> Book Your Appointment</h4>
+                <p>Log in and navigate to the **Book Appointment** link. Fill out the form completely, including your contact number, preferred date, and time slot. Check the available dates carefully.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="guide-step">
+                <h4><span class="step-icon">3.</span> Check Your Status (Pending)</h4>
+                <p>After booking, go to your **Dashboard** or **My Appointments**. Your initial status will be **Pending**. The administrator needs to review your request and confirm the slot availability.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

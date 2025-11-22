@@ -1,6 +1,55 @@
 {% extends "base.html" %}
 {% block title %}Appointments - Online TDC Appointment{% endblock %}
 {% block content %}
+        <style>
+  /* Sets the image background to cover the whole page */
+  body {
+    background: url("{{ url_for('static', filename='images/1.jpg') }}") no-repeat center center fixed;
+    background-size: cover;
+    /* Darkens the background slightly for better text contrast */
+    backdrop-filter: brightness(0.8);
+  }
+
+  .card {
+    /* Increased transparency (from 0.92 to 0.85) to let the background show through a bit more */
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    /* Added a slightly stronger shadow for depth */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn {
+    border-radius: 30px;
+    font-weight: 500;
+    transition: transform 0.2s;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .card h3 {
+    color: #0a3d62;
+    font-weight: 600;
+  }
+
+  .card p, .card li {
+    color: #333;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+  }
+
+  a.text-decoration-none {
+    color: #007bff;
+  }
+
+  a.text-decoration-none:hover {
+    text-decoration: underline;
+  }
+</style>
 <div class="card p-3">
   <h4>{{ 'All Appointments' if admin_view else 'My Appointments' }}</h4>
   {% if appointments %}

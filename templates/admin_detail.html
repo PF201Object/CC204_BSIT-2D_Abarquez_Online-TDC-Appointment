@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Appointment Detail #{{ appt.id }}{% endblock %}
+
+{% block content %}
+
+<h2 class="mt-4">Appointment #{{ appt.id }} - Detail & Management</h2>
+<p class="text-muted">Booking created on: {{ appt.created_at.strftime('%Y-%m-%d %I:%M %p') }}</p>
+
+<div class="row">
+    <!-- User/Appointment Details Card -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                Client Information & Booking Details
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Client Name:</dt>
+                    <dd class="col-sm-8">{{ appt.full_name }}</dd>
+
+                    <dt class="col-sm-4">Email:</dt>
+                    <dd class="col-sm-8">{{ appt.email }}</dd>
+
+                    <dt class="col-sm-4">Contact Number:</dt>
+                    <dd class="col-sm-8">{{ appt.contact_number }}</dd>
+
+                    <dt class="col-sm-4">Requested Date:</dt>
+                    <dd class="col-sm-8">{{ appt.preferred_date }}</dd>
+
+                    <dt class="col-sm-4">Requested Time:</dt>
+                    <dd class="col-sm-8">{{ appt.preferred_time }}</dd>
+
+                    <dt class="col-sm-4">Client Remarks:</dt>
+                    <dd class="col-sm-8">{{ appt.remarks or 'No remarks provided.' }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Management Form Card -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                Update Status & Payment
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('change_status', appt_id=appt.id) }}">
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label fw-bold">Appointment Status (Current: {{ appt.status }})</label>
+                        <select name="status" id="status" class="form-select" required>
+                            <option value="Pending" {% if appt.status == 'Pending' %}selected{% endif %}>Pending</option>
+                            <option value="Approved" {% if appt.status == 'Approved' %}selected{% endif %}>Approved</option>
+                            <option value="Completed" {% if appt.status == 'Completed' %}selected{% endif %}>Completed</option>
+                            <option value="Cancelled" {% if appt.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="payment_status" class="form-label fw-bold">Payment Status (Current: {{ appt.payment_status }})</label>
+                        <select name="payment_status" id="payment_status" class="form-select" required>
+                            <option value="Unpaid" {% if appt.payment_status == 'Unpaid' %}selected{% endif %}>Unpaid</option>
+                            <option value="Paid" {% if appt.payment_status == 'Paid' %}selected{% endif %}>Paid</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100 py-2">Apply Updates</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mt-3">← Back to Dashboard</a>
+
+{% endblock %}

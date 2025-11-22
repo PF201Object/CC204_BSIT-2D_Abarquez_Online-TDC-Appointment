@@ -1,31 +1,124 @@
 {% extends "base.html" %}
 {% block title %}Dashboard - Online TDC Appointment{% endblock %}
 {% block content %}
+    <style>
+  /* Sets the image background to cover the whole page */
+  body {
+    background: url("{{ url_for('static', filename='images/1.jpg') }}") no-repeat center center fixed;
+    background-size: cover;
+    /* Darkens the background slightly for better text contrast */
+    backdrop-filter: brightness(0.8);
+  }
+
+  .card {
+    /* Increased transparency (from 0.92 to 0.85) to let the background show through a bit more */
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    /* Added a slightly stronger shadow for depth */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn {
+    border-radius: 30px;
+    font-weight: 500;
+    transition: transform 0.2s;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .card h3 {
+    color: #0a3d62;
+    font-weight: 600;
+  }
+
+  .card p, .card li {
+    color: #333;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+  }
+
+  a.text-decoration-none {
+    color: #007bff;
+  }
+
+  a.text-decoration-none:hover {
+    text-decoration: underline;
+  }
+
+  /* Custom styles for the Update/Delete buttons in the list */
+  .list-group-item .btn-update {
+    background-color: #17a2b8; /* Info/Teal Color */
+    border-color: #17a2b8;
+    color: white;
+    border-radius: 20px;
+  }
+  .list-group-item .btn-update:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+  }
+  .list-group-item .btn-delete {
+    background-color: #dc3545; /* Danger/Red Color */
+    border-color: #dc3545;
+    color: white;
+    border-radius: 20px;
+  }
+  .list-group-item .btn-delete:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+</style>
 <div class="row">
   <div class="col-md-8">
-    <div class="card p-3">
+    <div class="card p-4 mb-3"> <!-- Added mb-3 for spacing -->
       <h4>Hello, {{ user.full_name or user.username }}</h4>
-      <p>From here you can book a theory course and see your bookings.</p>
-      <a class="btn btn-primary" href="{{ url_for('new_appointment') }}">Book New Appointment</a>
-      <a class="btn btn-secondary" href="{{ url_for('appointments') }}">My Appointments</a>
-      {% if user.is_admin %}
-        <a class="btn btn-outline-danger" href="{{ url_for('admin_appointments') }}">Admin: All Appointments</a>
-      {% endif %}
+      <p>TDC prices are fixed for only 599, Book Now!</p>
+      <div class="d-flex flex-wrap gap-2"> <!-- Use flex and gap for modern spacing -->
+          <a class="btn btn-primary" href="{{ url_for('new_appointment') }}">Book Appointment</a>
+          <a class="btn btn-secondary" href="{{ url_for('appointments') }}">My Appointments</a>
+          {% if user.is_admin %}
+            <a class="btn btn-outline-danger" href="{{ url_for('admin_dashboard') }}">Admin: All Appointments</a>
+          {% endif %}
+      </div>
     </div>
 
-    <div class="card mt-3 p-3">
-      <h5>Your recent appointments</h5>
+    <div class="card p-4"> <!-- Increased padding slightly -->
+      <h5 class="mb-3">Your recent appointments</h5>
       {% if appointments %}
         <ul class="list-group">
         {% for appt in appointments %}
           <li class="list-group-item d-flex justify-content-between align-items-center">
             <div>
               <strong>{{ appt.course_type if appt.course_type else 'Theory Course' }}</strong><br>
-              {{ appt.preferred_date }} {{ appt.preferred_time }} • {{ appt.status }}
+              <span class="text-muted small">
+                {{ appt.preferred_date }} {{ appt.preferred_time }}
+                •
+                <!-- Status Badge Implementation -->
+                <span class="badge
+                    {% if appt.status == 'Pending' %}bg-warning text-dark
+                    {% elif appt.status == 'Approved' %}bg-primary
+                    {% elif appt.status == 'Completed' %}bg-success
+                    {% elif appt.status == 'Cancelled' %}bg-danger
+                    {% else %}bg-secondary{% endif %}
+                    "
+                >
+                    {{ appt.status }}
+                </span>
+              </span>
             </div>
-            <form action="{{ url_for('delete_appointment', appt_id=appt.id) }}" method="post" onsubmit="return confirm('Delete appointment?');">
-              <button class="btn btn-sm btn-danger">Delete</button>
-            </form>
+            <!-- Fixed Button Styling to match visual request -->
+            <div class="btn-group" role="group">
+                <form action="{{ url_for('edit_appointment', appt_id=appt.id) }}">
+                <button class="btn btn-sm btn-update">Update</button>
+                </form>
+                <form action="{{ url_for('delete_appointment', appt_id=appt.id) }}" method="post" onsubmit="return confirm('Delete appointment?');" class="d-inline">
+                  <button class="btn btn-sm btn-delete">Delete</button>
+                </form>
+            </div>
           </li>
         {% endfor %}
         </ul>
@@ -36,7 +129,7 @@
   </div>
 
   <div class="col-md-4">
-    <div class="card p-3">
+    <div class="card p-4"> <!-- Increased padding slightly -->
       <h5>Road Safety Tips</h5>
       <ul>
         <li>Always wear seatbelts.</li>
@@ -44,7 +137,7 @@
         <li>Avoid distractions while driving.</li>
         <li>Keep safe following distance.</li>
       </ul>
-      <a href="https://www.who.int/health-topics/road-safety" target="_blank">More resources</a>
+      <a href="https://www.who.int/health-topics/road-safety" target="_blank" class="text-decoration-none">More resources</a>
     </div>
   </div>
 </div>

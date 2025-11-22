@@ -1,36 +1,120 @@
 {% extends "base.html" %}
-{% block title %}Book Appointment - Online TDC Appointment{% endblock %}
+{# Use appt or default to None. 'appt' is passed from the edit route. #}
+{% set is_editing = appt is defined and appt is not none %}
+
+{% block title %}
+  {{ 'Edit Appointment' if is_editing else 'Book Appointment' }} - Online TDC Appointment
+{% endblock %}
+
 {% block content %}
+    <style>
+  /* Sets the image background to cover the whole page */
+  body {
+    background: url("{{ url_for('static', filename='images/1.jpg') }}") no-repeat center center fixed;
+    background-size: cover;
+    /* Darkens the background slightly for better text contrast */
+    backdrop-filter: brightness(0.8);
+  }
+
+  .card {
+    /* Increased transparency (from 0.92 to 0.85) to let the background show through a bit more */
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    /* Added a slightly stronger shadow for depth */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn {
+    border-radius: 30px;
+    font-weight: 500;
+    transition: transform 0.2s;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .card h3 {
+    color: #0a3d62;
+    font-weight: 600;
+  }
+
+  .card p, .card li {
+    color: #333;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+  }
+
+  a.text-decoration-none {
+    color: #007bff;
+  }
+
+  a.text-decoration-none:hover {
+    text-decoration: underline;
+  }
+</style>
 <div class="row justify-content-center">
   <div class="col-md-8">
     <div class="card p-4">
-      <h3>Book Theory Course Appointment</h3>
-      <form action="{{ url_for('new_appointment') }}" method="post">
+
+      <h3>{{ 'Edit Appointment #%s' % appt.id if is_editing else 'Book Theory Course Appointment' }}</h3>
+
+      {% if is_editing %}
+        <p class="text-danger">
+          Note: Changing your appointment date/time may require **re-confirmation** by the admin.
+          Current Status: <strong>{{ appt.status }}</strong>
+        </p>
+      {% endif %}
+
+      <form action="{{ url_for('edit_appointment', appt_id=appt.id) if is_editing else url_for('new_appointment') }}" method="post">
+
         <div class="mb-2">
           <label class="form-label">Full Name</label>
-          <input class="form-control" type="text" name="full_name" required value="{{ (user.full_name if user) or '' }}">
+          <input class="form-control" type="text" name="full_name" required
+                 value="{{ appt.full_name if is_editing else (user.full_name if user) or '' }}">
         </div>
+
         <div class="mb-2">
           <label class="form-label">Email</label>
-          <input class="form-control" type="email" name="email" required value="{{ (user.email if user) or '' }}">
+          <input class="form-control" type="email" name="email" required
+                 value="{{ appt.email if is_editing else (user.email if user) or '' }}">
         </div>
+
         <div class="mb-2">
           <label class="form-label">Contact Number</label>
-          <input class="form-control" type="text" name="contact_number" required placeholder="09xxxxxxxxx">
+          <input class="form-control" type="text" name="contact_number" required
+                 placeholder="09xxxxxxxxx"
+                 value="{{ appt.contact_number if is_editing else '' }}">
         </div>
+
         <div class="mb-2">
           <label class="form-label">Preferred Date</label>
-          <input class="form-control" type="date" name="preferred_date" required>
+          <input class="form-control" type="date" name="preferred_date" required
+                 value="{{ appt.preferred_date if is_editing else '' }}">
         </div>
+
         <div class="mb-2">
           <label class="form-label">Preferred Time</label>
-          <input class="form-control" type="time" name="preferred_time" required>
+          <input class="form-control" type="time" name="preferred_time" required
+                 value="{{ appt.preferred_time if is_editing else '' }}">
         </div>
+
         <div class="mb-2">
-          <label class="form-label">Remarks (optional)</label>
-          <textarea class="form-control" name="remarks" rows="3"></textarea>
+          <label class="form-label">Preferred Exact Location</label>
+          <textarea class="form-control" name="remarks" rows="3">{{ appt.remarks | default('') if is_editing else '' }}</textarea>
         </div>
-        <button class="btn btn-success" type="submit">Submit Appointment</button>
+
+        <button class="btn btn-{{ 'warning' if is_editing else 'success' }}" type="submit">
+          {{ 'Update Appointment' if is_editing else 'Submit Appointment' }}
+        </button>
+
+        {% if is_editing %}
+          <a class="btn btn-secondary" href="{{ url_for('appointments') }}">Cancel Edit</a>
+        {% endif %}
+
       </form>
     </div>
   </div>

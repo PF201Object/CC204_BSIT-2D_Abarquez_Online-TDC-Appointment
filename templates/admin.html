@@ -1,67 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard - TDC Appointment System</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #0066cc;
-            color: white;
-        }
-        td button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        td button:hover {
-            background-color: #218838;
-        }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
+{% block title %}Admin Dashboard - TDC Appointment System{% endblock %}
 
-<h2>Admin Dashboard</h2>
-<p>Manage Appointments and Payments</p>
+{% block content %}
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Contact</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Status</th>
-    </tr>
-    {% for appt in appointments %}
-    <tr>
-        <td>{{ appt.id }}</td>
-        <td>{{ appt.full_name }}</td>
-        <td>{{ appt.email }}</td>
-        <td>{{ appt.contact_number }}</td>
-        <td>{{ appt.preferred_date }}</td>
-        <td>{{ appt.preferred_time }}</td>
-        <td>{{ appt.status }}</td>
-    </tr>
-    {% endfor %}
-</table>
+<h2 class="mt-4">Admin Dashboard</h2>
+<p class="text-muted mb-4">Appointments are sorted by **Pending** status first.</p>
 
-</body>
-</html>
+<div class="table-responsive">
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Date / Time</th>
+                <th>Current Status</th>
+                <th>Payment Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appt in appointments %}
+            <tr>
+                <td>{{ appt.id }}</td>
+                <td>{{ appt.full_name }}</td>
+                <td>{{ appt.preferred_date }} at {{ appt.preferred_time }}</td>
+                <td>
+                    <span class="badge {% if appt.status == 'Pending' %}bg-warning text-dark{% elif appt.status == 'Approved' %}bg-primary{% elif appt.status == 'Completed' %}bg-success{% else %}bg-secondary{% endif %}">
+                        {{ appt.status }}
+                    </span>
+                </td>
+                <td>
+                    <span class="badge {% if appt.payment_status == 'Paid' %}bg-success{% else %}bg-danger{% endif %}">
+                        {{ appt.payment_status }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ url_for('admin_appointment_detail', appt_id=appt.id) }}" class="btn btn-sm btn-info text-white">
+                        View
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a href="{{ url_for('admin_logout') }}" class="btn btn-danger mt-3">Logout</a>
+
+{% endblock %}
